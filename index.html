@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abrazo virtual</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            background-color: whitesmoke;
+            font-family: 'Comic Neue', cursive;
+        }
+        
+         :root {
+            --loading-width: 160px;
+            --loading-height: 23px;
+        }
+        
+        body {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        main {
+            text-align: center;
+            width: 90vw;
+            display: none;
+            /* Oculta el main inicialmente */
+        }
+        
+        .box {
+            display: inline-block;
+            border: solid black 4px;
+            width: var(--loading-width);
+            height: var(--loading-height);
+            background-color: white;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .loading-box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: var(--loading-width);
+            height: var(--loading-height);
+            background-color: violet;
+            clip-path: inset(0 100% 0 0);
+            animation: fillBox 5s linear forwards;
+        }
+        
+        .bear {
+            position: absolute;
+            top: -15px;
+            left: -40px;
+            height: 50px;
+            width: auto;
+            animation: run 5s linear forwards;
+        }
+        
+        @keyframes fillBox {
+            0% {
+                clip-path: inset(0 100% 0 0);
+            }
+            100% {
+                clip-path: inset(0 0 0 0);
+            }
+        }
+        
+        @keyframes run {
+            0% {
+                left: -40px;
+            }
+            100% {
+                left: calc(100% - 50px);
+            }
+        }
+        
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+        
+        #state-message {
+            font-size: larger;
+            font-weight: bold;
+            color: rgb(109, 109, 109);
+        }
+        
+        #title,
+        #result {
+            margin-top: 8px;
+            margin-bottom: 10px;
+        }
+        
+        #me {
+            margin-top: 8px;
+            margin-bottom: 14px;
+        }
+        
+        .box {
+            margin-top: 3px;
+        }
+        
+        .start-button {
+            background-color: #ff6f61;
+            color: white;
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.5s ease;
+            position: relative;
+            animation: pulse 2s infinite;
+            overflow: visible;
+        }
+        
+        .start-button::before,
+        .start-button::after {
+            content: "❤️";
+            position: absolute;
+            font-size: 2rem;
+            animation: fly 1s infinite ease-in-out;
+            opacity: 0;
+        }
+        
+        .start-button::before {
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation-delay: 0.3s;
+        }
+        
+        .start-button::after {
+            bottom: -20px;
+            right: 50%;
+            transform: translateX(50%);
+            animation-delay: 0.6s;
+        }
+        
+        .start-button:hover {
+            background-color: #ff5a4c;
+        }
+        
+        .button-container {
+            text-align: center;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes fly {
+            0% {
+                transform: translateY(0) scale(0.5);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-50px) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(0.5);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="button-container">
+        <button class="start-button" onclick="startExperience()">
+            ¿Quieres recibir el abrazo?
+        </button>
+    </div>
+
+    <main id="main-content">
+        <h1 id="title">Enviando abrazo virtual</h1>
+        <div>
+            <img id="me" src="penguin.svg" alt="">
+        </div>
+        <div class="box">
+            <div class="loading-box"></div>
+            <img src="corre.gif" alt="Osito" class="bear" id="bear-image">
+        </div>
+        <h3 id="state-message">cargando...</h3>
+        <h2 id="result">&nbsp;</h2>
+    </main>
+
+    <audio id="background-music" src="todo paso en un instante ♥️😞(MP3_160K).mp3"></audio>
+
+    <script>
+        function startExperience() {
+            document.querySelector('.button-container').style.display = 'none'; // Oculta el botón
+            document.getElementById('main-content').style.display = 'block'; // Muestra el contenido principal
+
+            const audio = document.getElementById('background-music');
+            audio.play();
+
+            setTimeout(function() {
+                const bearImage = document.getElementById('bear-image');
+                bearImage.style.animation = 'fadeOut 1s forwards'; // Desaparece el GIF
+
+                const message = document.getElementById('result');
+                message.innerHTML = "Abrazo enviado!";
+            }, 6000); // Ajusta el tiempo para que coincida con el final de la animación de llenado del cuadro
+
+            setTimeout(function() {
+                const message = document.getElementById('state-message');
+                message.innerHTML = "&nbsp;";
+            }, 6000);
+        }
+    </script>
+</body>
+
+</html>
